@@ -15,29 +15,34 @@ import com.example.matuleme.presentation.validation.isEmailValid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.auth
 import io.github.jan.supabase.gotrue.providers.builtin.Email
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor() : ViewModel() {
 
-    private val _state = mutableStateOf(SignInState())
-    val state: SignInState get() = _state.value
+    private val _state = MutableStateFlow(SignInState())
+    val state: StateFlow<SignInState> = _state.asStateFlow()
 
-    fun updateState(newState: SignInState) {
-        _state.value = newState
-    }
+    var stateValue: SignInState
+        get() = _state.value
+        set(value) {
+            _state.value = value
+        }
 
     fun signIn(controller: NavHostController, context: Context) {
         viewModelScope.launch {
             try {
-                if(state.email.isNotEmpty() && state.password.isNotEmpty()) {
-                    if(state.email.isEmailValid()) {
+                if(stateValue.email.isNotEmpty() && stateValue.password.isNotEmpty()) {
+                    if(stateValue.email.isEmailValid()) {
                         Toast.makeText(context, "Попытка входа", Toast.LENGTH_SHORT).show()
                         Constants.supabase.auth.signOut()
                         Constants.supabase.auth.signInWith(Email) {
-                            email = state.email
-                            password = state.password
+                            email = stateValue.email
+                            password = stateValue.password
                         }
                         Log.d("sign in", "успешно")
                         val currentUser = Constants.supabase.auth.currentUserOrNull()

@@ -5,13 +5,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.matuleme.presentation.screens.auth.signin.SignIn
+import com.example.matuleme.presentation.screens.auth.signup.SignUp
 import com.example.matuleme.presentation.screens.main.home.Home
 import com.example.matuleme.presentation.screens.splash.Splash
 
 @Composable
 fun Navigation(controller: NavHostController) {
     NavHost(
-        startDestination = NavigationRoutes.SIGNIN,
+        startDestination = NavigationRoutes.SIGNUP,
         navController = controller
     )
     {
@@ -23,6 +24,9 @@ fun Navigation(controller: NavHostController) {
         }
         composable(NavigationRoutes.HOME){
             Home(controller)
+        }
+        composable(NavigationRoutes.SIGNUP){
+            SignUp(controller)
         }
     }
 }

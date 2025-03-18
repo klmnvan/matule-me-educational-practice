@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -21,20 +22,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.matuleme.presentation.components.buttons.ButtonBack
 import com.example.matuleme.presentation.components.buttons.ButtonMaxWidth
 import com.example.matuleme.presentation.components.spacers.SpacerHeight
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldBase
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldPass
+import com.example.matuleme.presentation.navigation.NavigationRoutes
 import com.example.matuleme.presentation.ui.theme.MatuleMeTheme
 import com.example.matuleme.presentation.ui.theme.subtextdark
 
 @Composable
 fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel()) {
 
-    val state = vm.state
+    val state = vm.state.collectAsState()
     val context = LocalContext.current
 
     Column(
@@ -44,13 +46,17 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
             .background(MatuleMeTheme.colors.container)
             .padding(horizontal = 20.dp, vertical = 60.dp)
     ) {
+        ButtonBack {
+
+        }
+        SpacerHeight(12.dp)
         Text(
             text = "Привет!",
             modifier = Modifier.fillMaxWidth(),
             style = MatuleMeTheme.typography.authTitleScreen)
         SpacerHeight(8.dp)
         Text(
-            text = "Заполните Свои данные или продолжите через социальные медиа",
+            text = "Заполните Свои Данные",
             modifier = Modifier.fillMaxWidth(),
             style = MatuleMeTheme.typography.authDescriptionScreen)
         SpacerHeight(35.dp)
@@ -58,16 +64,16 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
             text = "Email",
             style = MatuleMeTheme.typography.authTitleField)
         SpacerHeight(12.dp)
-        AuthTextFieldBase(state.email, "xyz@gmail.com", "testEmail") {
-            vm.updateState(state.copy(email = it))
+        AuthTextFieldBase(state.value.email, "xyz@gmail.com", "testEmail") {
+            vm.stateValue = state.value.copy(email = it)
         }
         SpacerHeight(26.dp)
         Text(
             text = "Пароль",
             style = MatuleMeTheme.typography.authTitleField)
         SpacerHeight(12.dp)
-        AuthTextFieldPass (state.password, "••••••••","testPass") {
-            vm.updateState(state.copy(password = it))
+        AuthTextFieldPass (state.value.password, "••••••••","testPass") {
+            vm.stateValue = state.value.copy(password = it)
         }
         SpacerHeight(16.dp)
         Text(
@@ -91,13 +97,18 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
                 text = "Вы впервые?",
                 style = MatuleMeTheme.typography.authHintField,
                 fontSize = 16.sp,
-                lineHeight = 16.38.sp)
+                lineHeight = 16.38.sp
+            )
             Spacer(Modifier.width(5.dp))
             Text(text = "Создать пользователя",
                 style = MatuleMeTheme.typography.authTitleField,
                 lineHeight = 16.38.sp,
                 modifier = Modifier.clickable {
-
+                    controller.navigate(NavigationRoutes.SIGNUP){
+                        popUpTo(NavigationRoutes.SIGNIN) {
+                            inclusive = true
+                        }
+                    }
                 })
         }
     }
