@@ -6,8 +6,8 @@ import io.github.jan.supabase.postgrest.Postgrest
 
 object Constants {
     val supabase = createSupabaseClient(
-        supabaseUrl = "https://zbxiqiazdhvdszvnuoyu.supabase.co",
-        supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieGlxaWF6ZGh2ZHN6dm51b3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ0NDM5OTIsImV4cCI6MjA1MDAxOTk5Mn0.BjE3n1VIBzfZ02OzD9mjJlAOqKDIo4Rf0-G-uTcNcEI"
+        supabaseUrl = "https://dxltgkczhwdvxcsceydk.supabase.co",
+        supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4bHRna2N6aHdkdnhjc2NleWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyNDQ3NTUsImV4cCI6MjA1NzgyMDc1NX0.oav1hudoOXjozgUz3CqtC1lMdz3uEQsrn1729mW5tag"
     ) {
         install(Auth)
         install(Postgrest)

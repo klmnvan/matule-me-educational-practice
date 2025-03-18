@@ -1,4 +1,4 @@
-package com.example.matuleme.presentation.screens.auth.signup
+package com.example.matuleme.presentation.screens.auth.forgotpassword
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,9 +14,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,23 +26,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.matuleme.presentation.components.buttons.ButtonBack
 import com.example.matuleme.presentation.components.buttons.ButtonMaxWidth
-import com.example.matuleme.presentation.components.dialogs.DialogError
 import com.example.matuleme.presentation.components.spacers.SpacerHeight
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldBase
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldPass
 import com.example.matuleme.presentation.navigation.NavigationRoutes
 import com.example.matuleme.presentation.ui.theme.MatuleMeTheme
+import com.example.matuleme.presentation.ui.theme.subtextdark
 
 @Composable
-fun SignUp(controller: NavHostController, vm: SignUpViewModel = hiltViewModel()) {
+fun ForgotPassword(controller: NavHostController, vm: ForgotPasswordViewModel = hiltViewModel()) {
 
     val state = vm.state.collectAsState()
-
-    if(state.value.dialogIsOpen) {
-        DialogError("Ошибка", state.value.error) {
-            vm.stateValue = state.value.copy(dialogIsOpen = false)
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -55,66 +50,24 @@ fun SignUp(controller: NavHostController, vm: SignUpViewModel = hiltViewModel())
         }
         SpacerHeight(12.dp)
         Text(
-            text = "Регистрация",
+            text = "Забыл Пароль",
             modifier = Modifier.fillMaxWidth(),
             style = MatuleMeTheme.typography.authTitleScreen)
         SpacerHeight(8.dp)
         Text(
-            text = "Заполните Свои Данные",
+            text = "Введите Свою Учетную Запись\n" +
+                    "Для Сброса",
             modifier = Modifier.fillMaxWidth(),
             style = MatuleMeTheme.typography.authDescriptionScreen)
-        SpacerHeight(54.dp)
-        Text(
-            text = "Ваше имя",
-            style = MatuleMeTheme.typography.authTitleField)
-        SpacerHeight(12.dp)
-        AuthTextFieldBase(state.value.name, "xxxxxxxx", "testName") {
-            vm.stateValue = state.value.copy(name = it)
-        }
-        SpacerHeight(12.dp)
-        Text(
-            text = "Email",
-            style = MatuleMeTheme.typography.authTitleField)
-        SpacerHeight(12.dp)
+        SpacerHeight(40.dp)
         AuthTextFieldBase(state.value.email, "xyz@gmail.com", "testEmail") {
             vm.stateValue = state.value.copy(email = it)
         }
-        SpacerHeight(12.dp)
-        Text(
-            text = "Пароль",
-            style = MatuleMeTheme.typography.authTitleField)
-        SpacerHeight(12.dp)
-        AuthTextFieldPass (state.value.password, "••••••••","testPass") {
-            vm.stateValue = state.value.copy(password = it)
-        }
-        SpacerHeight(12.dp)
-        //чекбокс будет
-        SpacerHeight(24.dp)
-        ButtonMaxWidth("Зарегистрироваться") {
-            vm.signUp(controller)
+        SpacerHeight(40.dp)
+        ButtonMaxWidth("Отправить") {
+            //vm.signIn(controller, context)
         }
         Spacer(modifier = Modifier.weight(1f))
-        SpacerHeight(20.dp)
-        Row(Modifier.fillMaxWidth(), Arrangement.Center) {
-            Text(
-                text = "Есть аккаунт?",
-                style = MatuleMeTheme.typography.authHintField,
-                fontSize = 16.sp,
-                lineHeight = 16.38.sp)
-            Spacer(Modifier.width(5.dp))
-            Text(text = "Войти",
-                style = MatuleMeTheme.typography.authTitleField,
-                lineHeight = 16.38.sp,
-                modifier = Modifier.clickable {
-                    controller.navigate(NavigationRoutes.SIGNIN) {
-                        popUpTo(NavigationRoutes.SIGNUP) {
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-
     }
 
 }
@@ -122,5 +75,6 @@ fun SignUp(controller: NavHostController, vm: SignUpViewModel = hiltViewModel())
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    SignUp(rememberNavController())
+    ForgotPassword(rememberNavController())
 }
+
