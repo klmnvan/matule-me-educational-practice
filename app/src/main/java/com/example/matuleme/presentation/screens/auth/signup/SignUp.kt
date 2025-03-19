@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.matuleme.presentation.components.buttons.ButtonBack
 import com.example.matuleme.presentation.components.buttons.ButtonMaxWidth
+import com.example.matuleme.presentation.components.checkboxes.CheckboxSignUp
 import com.example.matuleme.presentation.components.dialogs.DialogError
 import com.example.matuleme.presentation.components.spacers.SpacerHeight
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldBase
@@ -88,9 +89,14 @@ fun SignUp(controller: NavHostController, vm: SignUpViewModel = hiltViewModel())
             vm.stateValue = state.value.copy(password = it)
         }
         SpacerHeight(12.dp)
-        //чекбокс будет
+        CheckboxSignUp(state.value.checkbox) {
+            vm.stateValue = state.value.copy(checkbox = it)
+        }
         SpacerHeight(24.dp)
-        ButtonMaxWidth("Зарегистрироваться") {
+        ButtonMaxWidth("Зарегистрироваться",
+            state.value.email.isNotEmpty() && state.value.name.isNotEmpty() && state.value.password.isNotEmpty()
+                    && state.value.checkbox
+        ) {
             vm.signUp(controller)
         }
         Spacer(modifier = Modifier.weight(1f))

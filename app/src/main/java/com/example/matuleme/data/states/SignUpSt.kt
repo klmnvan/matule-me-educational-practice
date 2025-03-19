@@ -1,6 +1,6 @@
 package com.example.matuleme.data.states
 
-data class SignUpState(
+data class SignUpSt(
     val name: String = "kakashke",
     val email: String = "nesklmnvan@gmail.com",
     val password: String = "123456",
@@ -8,3 +8,4 @@ data class SignUpState(
     val dialogIsOpen: Boolean = false,
     val error: String = ""
 )
+

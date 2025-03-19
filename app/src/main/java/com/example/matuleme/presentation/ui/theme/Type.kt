@@ -88,7 +88,8 @@ val typography = Typography(
         fontFamily = raleway,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        color = subtextdark
+        color = subtextdark,
+        textAlign = TextAlign.Center
     ),
     textCheckbox = TextStyle(
         fontFamily = raleway,

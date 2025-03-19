@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 
 @Composable
-fun OtpVerification(controller: NavHostController, vm: OtpVerificationViewModel = hiltViewModel()) {
+fun OtpVerification(controller: NavHostController, email: String,  vm: OtpVerificationViewModel = hiltViewModel()) {
 
 }
 

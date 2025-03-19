@@ -2,6 +2,7 @@ package com.example.matuleme.presentation.screens.auth.signin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +28,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.matuleme.presentation.components.buttons.ButtonBack
 import com.example.matuleme.presentation.components.buttons.ButtonMaxWidth
+import com.example.matuleme.presentation.components.dialogs.DialogError
 import com.example.matuleme.presentation.components.spacers.SpacerHeight
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldBase
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldPass
@@ -38,6 +41,12 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
 
     val state = vm.state.collectAsState()
     val context = LocalContext.current
+
+    if(state.value.dialogIsOpen) {
+        DialogError("Ошибка", state.value.error) {
+            vm.stateValue = state.value.copy(dialogIsOpen = false)
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -80,14 +89,19 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
             "Воcстановить",
             style = MatuleMeTheme.typography.authHintField,
             fontSize = 12.sp,
-            modifier = Modifier.fillMaxWidth().clickable {
-                //
+            modifier = Modifier.fillMaxWidth().clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) {
+                controller.navigate(NavigationRoutes.FORGOTPASSWORD)
             },
             color = subtextdark,
             textAlign = TextAlign.Right
         )
         SpacerHeight(24.dp)
-        ButtonMaxWidth("Войти") {
+        ButtonMaxWidth("Войти",
+            state.value.email.isNotEmpty() && state.value.password.isNotEmpty()
+        ) {
             vm.signIn(controller, context)
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -103,7 +117,10 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
             Text(text = "Создать пользователя",
                 style = MatuleMeTheme.typography.authTitleField,
                 lineHeight = 16.38.sp,
-                modifier = Modifier.clickable {
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
                     controller.navigate(NavigationRoutes.SIGNUP){
                         popUpTo(NavigationRoutes.SIGNIN) {
                             inclusive = true

@@ -12,9 +12,10 @@ import androidx.compose.ui.unit.dp
 import com.example.matuleme.presentation.ui.theme.MatuleMeTheme
 import com.example.matuleme.presentation.ui.theme.accent
 import com.example.matuleme.presentation.ui.theme.background
+import com.example.matuleme.presentation.ui.theme.disable
 
 @Composable
-fun ButtonMaxWidth(title: String, onclick: () -> Unit) {
+fun ButtonMaxWidth(title: String, enabled: Boolean, onclick: () -> Unit) {
     Button(
         onClick = {
             onclick()
@@ -22,7 +23,7 @@ fun ButtonMaxWidth(title: String, onclick: () -> Unit) {
         shape = RoundedCornerShape(15.dp),
         colors = ButtonDefaults.buttonColors(
             contentColor = background,
-            containerColor = accent
+            containerColor = if(enabled) accent else disable,
         ), modifier = Modifier
             .fillMaxWidth()
             .height(55.dp)

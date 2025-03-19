@@ -1,8 +1,9 @@
 package com.example.matuleme.data.states
 
-data class SignInState(
+data class SignInSt(
     val email: String = "",
     val password: String = "",
-    val error: String = ""
+    val error: String = "",
+    val dialogIsOpen: Boolean = false
 )
 

@@ -1,42 +1,46 @@
 package com.example.matuleme.presentation.screens.auth.forgotpassword
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.matuleme.presentation.components.buttons.ButtonBack
 import com.example.matuleme.presentation.components.buttons.ButtonMaxWidth
+import com.example.matuleme.presentation.components.dialogs.DialogCheckEmail
+import com.example.matuleme.presentation.components.dialogs.DialogError
 import com.example.matuleme.presentation.components.spacers.SpacerHeight
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldBase
-import com.example.matuleme.presentation.components.textfields.AuthTextFieldPass
-import com.example.matuleme.presentation.navigation.NavigationRoutes
 import com.example.matuleme.presentation.ui.theme.MatuleMeTheme
-import com.example.matuleme.presentation.ui.theme.subtextdark
 
 @Composable
 fun ForgotPassword(controller: NavHostController, vm: ForgotPasswordViewModel = hiltViewModel()) {
 
     val state = vm.state.collectAsState()
+
+    if(state.value.dialogErrorIsOpen) {
+        DialogError("Ошибка", state.value.error) {
+            vm.stateValue = state.value.copy(dialogErrorIsOpen = false)
+        }
+    }
+
+    if(state.value.dialogSendCodeIsOpen) {
+        DialogCheckEmail {
+            vm.stateValue = state.value.copy(dialogErrorIsOpen = false)
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -64,8 +68,8 @@ fun ForgotPassword(controller: NavHostController, vm: ForgotPasswordViewModel = 
             vm.stateValue = state.value.copy(email = it)
         }
         SpacerHeight(40.dp)
-        ButtonMaxWidth("Отправить") {
-            //vm.signIn(controller, context)
+        ButtonMaxWidth("Отправить", state.value.email.isNotEmpty()) {
+            vm.sendCode(controller)
         }
         Spacer(modifier = Modifier.weight(1f))
     }

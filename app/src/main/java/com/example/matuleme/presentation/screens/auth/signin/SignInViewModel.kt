@@ -3,11 +3,10 @@ package com.example.matuleme.presentation.screens.auth.signin
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.matuleme.data.states.SignInState
+import com.example.matuleme.data.states.SignInSt
 import com.example.matuleme.domain.network.Constants
 import com.example.matuleme.domain.repository.CacheRepository
 import com.example.matuleme.presentation.navigation.NavigationRoutes
@@ -24,10 +23,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor() : ViewModel() {
 
-    private val _state = MutableStateFlow(SignInState())
-    val state: StateFlow<SignInState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(SignInSt())
+    val state: StateFlow<SignInSt> = _state.asStateFlow()
 
-    var stateValue: SignInState
+    var stateValue: SignInSt
         get() = _state.value
         set(value) {
             _state.value = value
@@ -57,19 +56,16 @@ class SignInViewModel @Inject constructor() : ViewModel() {
                                 inclusive = true
                             }
                         }
-                    } else {
-                        Toast.makeText(context, "Неверный формат почты", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(context, "Не все поля заполнены", Toast.LENGTH_SHORT).show()
-                }
+                    } else stateValue = stateValue.copy(dialogIsOpen = true, error = "Неверный формат почты")
+                } else stateValue = stateValue.copy(dialogIsOpen = true, error = "Не все поля заполнены")
+
             } catch (e: Exception) {
                 if(e.message == "Invalid login credentials") {
-                    Toast.makeText(context, "Неверные данные входа", Toast.LENGTH_SHORT).show()
+                    stateValue = stateValue.copy(dialogIsOpen = true, error = "Неверные данные входа")
                     Log.d("sign in error", e.message.toString())
                 } else {
+                    stateValue = stateValue.copy(dialogIsOpen = true, error = e.message.toString())
                     Log.d("sign in error", e.message.toString())
-                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
