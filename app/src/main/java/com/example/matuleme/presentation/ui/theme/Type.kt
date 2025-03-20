@@ -24,6 +24,7 @@ data class Typography(
     val bestSeller: TextStyle = TextStyle(),
     val titleCard: TextStyle = TextStyle(),
     val titleMainScreens: TextStyle = TextStyle(),
+    val titleProfile: TextStyle = TextStyle(),
 )
 
 val raleway = FontFamily(
@@ -128,6 +129,13 @@ val typography = Typography(
         fontSize = 16.sp,
         color = text,
         lineHeight = 20.sp
+    ),
+    titleProfile = TextStyle(
+        fontFamily = raleway,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        color = text,
+        textAlign = TextAlign.Center
     ),
 )
 

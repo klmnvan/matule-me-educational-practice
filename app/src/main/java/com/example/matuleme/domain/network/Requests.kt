@@ -6,6 +6,7 @@ import com.example.matuleme.domain.models.Product
 import com.example.matuleme.domain.models.ProfileEnt
 import com.example.matuleme.domain.repository.CacheRepository
 import io.github.jan.supabase.postgrest.from
+import io.github.jan.supabase.postgrest.result.PostgrestResult
 import java.util.UUID
 
 object Requests {
@@ -48,6 +49,19 @@ object Requests {
                     eq("user_id", CacheRepository.uuidCurrentUser)
                 }
             }.decodeSingle()
+    }
+
+    suspend fun updateProfile(profile: ProfileEnt): PostgrestResult {
+        return Constants.supabase.from("profiles").update(
+            {
+                set("firstname", profile.firstname)
+                set("lastname", profile.lastname)
+                set("address", profile.address)
+                set("phone", profile.phone)
+            }
+        ) {
+            filter { eq("user_id", CacheRepository.uuidCurrentUser) }
+        }
     }
 
 }

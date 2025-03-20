@@ -7,3 +7,4 @@ data class SideMenuSt(
     val error: String = "",
     val dialogIsOpen: Boolean = false,
 )
+

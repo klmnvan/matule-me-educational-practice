@@ -6,23 +6,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.matuleme.presentation.screens.auth.forgotpassword.ForgotPassword
 import com.example.matuleme.presentation.screens.auth.newpassword.NewPassword
 import com.example.matuleme.presentation.screens.auth.otpverification.OtpVerification
 import com.example.matuleme.presentation.screens.auth.signin.SignIn
-import com.example.matuleme.presentation.screens.auth.signup.SignUp
 import com.example.matuleme.presentation.screens.main.bucket.Bucket
 import com.example.matuleme.presentation.screens.main.favorites.Favourite
 import com.example.matuleme.presentation.screens.main.home.Home
 import com.example.matuleme.presentation.screens.main.notification.Notification
-import com.example.matuleme.presentation.screens.main.profile.show.ShowProfile
+import com.example.matuleme.presentation.screens.main.profile.ShowProfile
 import com.example.matuleme.presentation.screens.main.sidemenu.SideMenu
 import com.example.matuleme.presentation.screens.splash.Splash
 
 @Composable
 fun Navigation(controller: NavHostController, barsIsVisible: MutableState<Boolean> = mutableStateOf(false)) {
     NavHost(
-        startDestination = NavigationRoutes.SPLASH,
+        startDestination = NavigationRoutes.BASICPROFILE,
         navController = controller
     ) {
         composable(NavigationRoutes.SPLASH) {
