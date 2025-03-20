@@ -1,9 +1,10 @@
-package com.example.matuleme.presentation.screens.main.home
+package com.example.matuleme.presentation.screens.main.favorites
 
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.matuleme.data.states.FavouriteSt
 import com.example.matuleme.data.states.HomeSt
 import com.example.matuleme.domain.models.Category
 import com.example.matuleme.domain.models.Product
@@ -18,12 +19,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(): ViewModel() {
+class FavouriteViewModel @Inject constructor(): ViewModel() {
 
-    private val _state = MutableStateFlow(HomeSt())
-    val state: StateFlow<HomeSt> = _state.asStateFlow()
+    private val _state = MutableStateFlow(FavouriteSt())
+    val state: StateFlow<FavouriteSt> = _state.asStateFlow()
 
-    var stateValue: HomeSt
+    var stateValue: FavouriteSt
         get() = _state.value
         set(value) {
             _state.value = value
@@ -33,19 +34,16 @@ class HomeViewModel @Inject constructor(): ViewModel() {
     fun getData() {
         viewModelScope.launch {
             try {
-                val listCategory = Requests.getListCategory().toMutableList()
-                listCategory.add(0, Category("", "Все"))
                 val listProduct = Requests.getAllProducts().toMutableList()
                 val listIdFavProduct = Requests.getIdFavProducts().toMutableList()
                 val bucket = supabase.storage.from("products")
                 val files = bucket.list().toMutableList()
                 val listUrl: MutableList<String> = mutableListOf()
-                    files.forEach { name ->
+                files.forEach { name ->
                     listUrl.add(bucket.publicUrl(name.name))
                 }
                 stateValue = stateValue.copy(
                     products = listProduct,
-                    categories = listCategory,
                     idFavSneakers = listIdFavProduct,
                     listBucket = listUrl
                 )

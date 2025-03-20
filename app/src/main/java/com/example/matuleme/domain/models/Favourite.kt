@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Favourite(
     var id: String,
-    var id_sneaker: String,
-    var id_user: String,
+    var product_id: String,
+    var user_id: String,
 )

@@ -10,11 +10,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.matuleme.domain.repository.CacheRepository
+import com.example.matuleme.presentation.components.navigation.BottomBar
 import com.example.matuleme.presentation.navigation.Navigation
 import com.example.matuleme.presentation.ui.theme.MatuleMeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,8 +33,12 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 CacheRepository.init(context)
                 val controller = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize()) {
-                    Navigation(controller)
+                val barsIsVisible = remember { mutableStateOf(false) }
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = { if(barsIsVisible.value) BottomBar(controller) }
+                ) {
+                    Navigation(controller, barsIsVisible)
                 }
             }
         }

@@ -81,6 +81,7 @@ dependencies {
     implementation(platform("io.github.jan-tennert.supabase:bom:$supabase_version"))
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
     implementation("io.github.jan-tennert.supabase:gotrue-kt")
+    implementation("io.github.jan-tennert.supabase:storage-kt")
     implementation("io.ktor:ktor-client-android:$ktor_version")
 
     //hilt
@@ -88,5 +89,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt_android_version")
     kapt("com.google.dagger:hilt-compiler:$hilt_android_version")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("io.coil-kt:coil-svg:2.2.2")
 
 }

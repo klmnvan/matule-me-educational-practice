@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Category(
-    var id_category: String,
-    var category: String
+    var id: String,
+    var title: String
 )
 
 

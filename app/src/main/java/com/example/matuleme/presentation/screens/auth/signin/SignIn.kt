@@ -55,9 +55,7 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
             .background(MatuleMeTheme.colors.container)
             .padding(horizontal = 20.dp, vertical = 60.dp)
     ) {
-        ButtonBack {
-
-        }
+        ButtonBack(controller)
         SpacerHeight(12.dp)
         Text(
             text = "Привет!",
@@ -87,15 +85,13 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
         SpacerHeight(16.dp)
         Text(
             "Воcстановить",
-            style = MatuleMeTheme.typography.authHintField,
-            fontSize = 12.sp,
+            style = MatuleMeTheme.typography.clickableTextHint,
             modifier = Modifier.fillMaxWidth().clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             ) {
                 controller.navigate(NavigationRoutes.FORGOTPASSWORD)
             },
-            color = subtextdark,
             textAlign = TextAlign.Right
         )
         SpacerHeight(24.dp)
@@ -121,11 +117,7 @@ fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel())
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null
                 ) {
-                    controller.navigate(NavigationRoutes.SIGNUP){
-                        popUpTo(NavigationRoutes.SIGNIN) {
-                            inclusive = true
-                        }
-                    }
+                    controller.navigate(NavigationRoutes.SIGNUP)
                 })
         }
     }

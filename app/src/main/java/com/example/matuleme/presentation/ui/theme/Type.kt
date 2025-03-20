@@ -20,6 +20,10 @@ data class Typography(
     val titleDialog: TextStyle = TextStyle(),
     val descDialog: TextStyle = TextStyle(),
     val textCheckbox: TextStyle = TextStyle(),
+    val clickableTextHint: TextStyle = TextStyle(),
+    val bestSeller: TextStyle = TextStyle(),
+    val titleCard: TextStyle = TextStyle(),
+    val titleMainScreens: TextStyle = TextStyle(),
 )
 
 val raleway = FontFamily(
@@ -97,6 +101,33 @@ val typography = Typography(
         fontSize = 16.sp,
         color = subtextdark,
         textDecoration = TextDecoration.Underline
+    ),
+    clickableTextHint = TextStyle(
+        fontFamily = raleway,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        color = subtextdark,
+        lineHeight = 16.sp
+    ),
+    bestSeller = TextStyle(
+        fontFamily = raleway,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        color = accent,
+        lineHeight = 16.sp
+    ),
+    titleCard = TextStyle(
+        fontFamily = raleway,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        color = hint,
+    ),
+    titleMainScreens = TextStyle(
+        fontFamily = raleway,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        color = text,
+        lineHeight = 20.sp
     ),
 )
 

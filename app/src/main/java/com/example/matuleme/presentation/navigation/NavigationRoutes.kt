@@ -5,6 +5,7 @@ object NavigationRoutes {
     const val SPLASH = "splash"
     const val SIGNIN = "sign in"
     const val FORGOTPASSWORD = "forgot password"
+    const val NEWPASSWORD = "new password"
     const val OTP = "otp"
     const val HOME = "home"
     const val FAVOURITE = "fav"

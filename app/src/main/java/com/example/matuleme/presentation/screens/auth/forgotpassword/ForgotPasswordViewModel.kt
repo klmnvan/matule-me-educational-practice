@@ -27,14 +27,14 @@ class ForgotPasswordViewModel @Inject constructor() : ViewModel() {
             _state.value = value
         }
 
-    fun sendCode(controller: NavHostController) {
+    fun sendCode() {
         viewModelScope.launch {
             try {
                 if (stateValue.email.isEmailValid()) {
                     Constants.supabase.auth.resetPasswordForEmail(
-                        email = stateValue.email, redirectUrl = ""
+                        email = stateValue.email
                     )
-                    controller.navigate(NavigationRoutes.OTP + "/${stateValue.email}")
+                    stateValue = stateValue.copy(dialogSendCodeIsOpen = true)
                 }
                 else stateValue = stateValue.copy(dialogErrorIsOpen = true, error = "Неверный формат почты!")
             } catch (e: Exception) {

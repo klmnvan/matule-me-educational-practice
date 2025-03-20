@@ -1,5 +1,6 @@
 package com.example.matuleme.presentation.screens.auth.forgotpassword
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,8 +24,10 @@ import com.example.matuleme.presentation.components.dialogs.DialogCheckEmail
 import com.example.matuleme.presentation.components.dialogs.DialogError
 import com.example.matuleme.presentation.components.spacers.SpacerHeight
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldBase
+import com.example.matuleme.presentation.navigation.NavigationRoutes
 import com.example.matuleme.presentation.ui.theme.MatuleMeTheme
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun ForgotPassword(controller: NavHostController, vm: ForgotPasswordViewModel = hiltViewModel()) {
 
@@ -38,7 +41,8 @@ fun ForgotPassword(controller: NavHostController, vm: ForgotPasswordViewModel = 
 
     if(state.value.dialogSendCodeIsOpen) {
         DialogCheckEmail {
-            vm.stateValue = state.value.copy(dialogErrorIsOpen = false)
+            vm.stateValue = state.value.copy(dialogSendCodeIsOpen = false)
+            controller.navigate(NavigationRoutes.OTP + "/${state.value.email}")
         }
     }
 
@@ -49,9 +53,7 @@ fun ForgotPassword(controller: NavHostController, vm: ForgotPasswordViewModel = 
             .background(MatuleMeTheme.colors.container)
             .padding(horizontal = 20.dp, vertical = 60.dp)
     ) {
-        ButtonBack {
-
-        }
+        ButtonBack(controller)
         SpacerHeight(12.dp)
         Text(
             text = "Забыл Пароль",
@@ -69,7 +71,7 @@ fun ForgotPassword(controller: NavHostController, vm: ForgotPasswordViewModel = 
         }
         SpacerHeight(40.dp)
         ButtonMaxWidth("Отправить", state.value.email.isNotEmpty()) {
-            vm.sendCode(controller)
+            vm.sendCode()
         }
         Spacer(modifier = Modifier.weight(1f))
     }

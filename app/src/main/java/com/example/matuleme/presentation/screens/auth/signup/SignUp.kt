@@ -2,6 +2,7 @@ package com.example.matuleme.presentation.screens.auth.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,9 +53,7 @@ fun SignUp(controller: NavHostController, vm: SignUpViewModel = hiltViewModel())
             .background(MatuleMeTheme.colors.container)
             .padding(horizontal = 20.dp, vertical = 60.dp)
     ) {
-        ButtonBack {
-
-        }
+        ButtonBack(controller)
         SpacerHeight(12.dp)
         Text(
             text = "Регистрация",
@@ -111,12 +111,11 @@ fun SignUp(controller: NavHostController, vm: SignUpViewModel = hiltViewModel())
             Text(text = "Войти",
                 style = MatuleMeTheme.typography.authTitleField,
                 lineHeight = 16.38.sp,
-                modifier = Modifier.clickable {
-                    controller.navigate(NavigationRoutes.SIGNIN) {
-                        popUpTo(NavigationRoutes.SIGNUP) {
-                            inclusive = true
-                        }
-                    }
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null
+                ) {
+                    controller.navigate(NavigationRoutes.SIGNIN)
                 }
             )
         }

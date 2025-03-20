@@ -2,6 +2,7 @@ package com.example.matuleme.domain.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.matuleme.presentation.screens.splash.components.Acts
 
 object CacheRepository {
     private lateinit var actSystem: SharedPreferences
@@ -11,7 +12,7 @@ object CacheRepository {
     }
 
     var act: Int
-        get() = actSystem.getInt("act", 0)
+        get() = actSystem.getInt("act", Acts.SIGNIN)
         set(value) = actSystem.edit().putInt("act", value).apply()
 
     var uuidCurrentUser: String
