@@ -34,7 +34,6 @@ import com.example.matuleme.presentation.components.textfields.AuthTextFieldBase
 import com.example.matuleme.presentation.components.textfields.AuthTextFieldPass
 import com.example.matuleme.presentation.navigation.NavigationRoutes
 import com.example.matuleme.presentation.ui.theme.MatuleMeTheme
-import com.example.matuleme.presentation.ui.theme.subtextdark
 
 @Composable
 fun SignIn(controller: NavHostController, vm: SignInViewModel = hiltViewModel()) {

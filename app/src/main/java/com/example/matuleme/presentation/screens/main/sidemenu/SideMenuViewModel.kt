@@ -54,7 +54,7 @@ class SideMenuViewModel @Inject constructor(): ViewModel() {
                 supabase.auth.signOut()
                 CacheRepository.act = 1
                 controller.navigate(NavigationRoutes.SIGNIN) {
-                    popUpTo(NavigationRoutes.SIDEMENU) {
+                    popUpTo(NavigationRoutes.SIGNIN) {
                         inclusive = true
                     }
                 }

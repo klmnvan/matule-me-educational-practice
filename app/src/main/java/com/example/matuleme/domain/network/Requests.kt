@@ -51,8 +51,8 @@ object Requests {
             }.decodeSingle()
     }
 
-    suspend fun updateProfile(profile: ProfileEnt): PostgrestResult {
-        return Constants.supabase.from("profiles").update(
+    suspend fun updateProfile(profile: ProfileEnt) {
+        Constants.supabase.from("profiles").update(
             {
                 set("firstname", profile.firstname)
                 set("lastname", profile.lastname)

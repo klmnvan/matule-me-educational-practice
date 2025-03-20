@@ -52,13 +52,7 @@ fun BottomBar(controller: NavHostController) {
                         .weight(1f).fillMaxHeight()
                         .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
                             if(currentRoute != screen.route) {
-                                controller.navigate(screen.route) {
-                                    currentRoute?.let {
-                                        popUpTo(it) {
-                                            inclusive = true
-                                        }
-                                    }
-                                }
+                                controller.navigate(screen.route)
                             }
                         },
                     horizontalAlignment = Alignment.CenterHorizontally,

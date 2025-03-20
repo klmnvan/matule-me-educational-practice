@@ -81,7 +81,7 @@ fun Favourite(controller: NavHostController, vm: FavouriteViewModel = hiltViewMo
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null
                         ) {
-                            //vm.stateValue = state.value.copy(screenState = HomeStates.Main)
+                            controller.navigateUp()
                         }
                 )
             }

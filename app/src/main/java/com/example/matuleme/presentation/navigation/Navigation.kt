@@ -6,9 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.matuleme.presentation.screens.auth.forgotpassword.ForgotPassword
 import com.example.matuleme.presentation.screens.auth.newpassword.NewPassword
 import com.example.matuleme.presentation.screens.auth.otpverification.OtpVerification
 import com.example.matuleme.presentation.screens.auth.signin.SignIn
+import com.example.matuleme.presentation.screens.auth.signup.SignUp
 import com.example.matuleme.presentation.screens.main.bucket.Bucket
 import com.example.matuleme.presentation.screens.main.favorites.Favourite
 import com.example.matuleme.presentation.screens.main.home.Home
@@ -20,7 +22,7 @@ import com.example.matuleme.presentation.screens.splash.Splash
 @Composable
 fun Navigation(controller: NavHostController, barsIsVisible: MutableState<Boolean> = mutableStateOf(false)) {
     NavHost(
-        startDestination = NavigationRoutes.BASICPROFILE,
+        startDestination = NavigationRoutes.SPLASH,
         navController = controller
     ) {
         composable(NavigationRoutes.SPLASH) {
@@ -30,6 +32,14 @@ fun Navigation(controller: NavHostController, barsIsVisible: MutableState<Boolea
         composable(NavigationRoutes.SIGNIN) {
             barsIsVisible.value = false
             SignIn(controller)
+        }
+        composable(NavigationRoutes.SIGNUP) {
+            barsIsVisible.value = false
+            SignUp(controller)
+        }
+        composable(NavigationRoutes.FORGOTPASSWORD) {
+            barsIsVisible.value = false
+            ForgotPassword(controller)
         }
         composable(NavigationRoutes.SIDEMENU) {
             barsIsVisible.value = false

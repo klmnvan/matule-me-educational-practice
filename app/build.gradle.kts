@@ -94,4 +94,8 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("io.coil-kt:coil-svg:2.2.2")
 
+    //баркод
+    implementation ("com.google.zxing:core:3.4.1")
+    implementation ("com.google.zxing:android-core:3.3.0")
+
 }

@@ -103,9 +103,6 @@ fun RowScope.ProductItem(product: Product, isFavourite: Boolean, photo: String, 
                     .data(photo)
                     .size(Size.ORIGINAL).build()
             ).state
-            if (imgState is AsyncImagePainter.State.Error) {
-                CircularProgressIndicator()
-            }
             if (imgState is AsyncImagePainter.State.Success) {
                 Image(
                     modifier = Modifier
@@ -117,6 +114,11 @@ fun RowScope.ProductItem(product: Product, isFavourite: Boolean, photo: String, 
                     contentDescription = "",
                     contentScale = ContentScale.Crop
                 )
+            }
+            else {
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
             }
             //текст
             Text("BEST SELLER", style = MatuleMeTheme.typography.bestSeller)

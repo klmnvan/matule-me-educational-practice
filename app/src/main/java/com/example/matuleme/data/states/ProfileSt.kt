@@ -6,7 +6,7 @@ import com.example.matuleme.presentation.screens.main.profile.components.Profile
 data class ProfileSt(
     val profile: ProfileEnt = ProfileEnt("", "", "", "", "", "", "", ""),
     val editProfile: ProfileEnt = ProfileEnt("", "", "", "", "", "", "", ""),
-    val stateScreen: ProfileStates = ProfileStates.Edit,
+    val stateScreen: ProfileStates = ProfileStates.Show,
     val error: String = "",
     val dialogIsOpen: Boolean = false,
 )

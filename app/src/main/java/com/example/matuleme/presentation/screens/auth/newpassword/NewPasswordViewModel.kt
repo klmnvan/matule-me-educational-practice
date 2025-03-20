@@ -36,7 +36,7 @@ class NewPasswordViewModel @Inject constructor() : ViewModel() {
                             password = stateValue.password
                         }
                         controller.navigate(NavigationRoutes.SIGNIN) {
-                            popUpTo(NavigationRoutes.NEWPASSWORD) {
+                            popUpTo(NavigationRoutes.SIGNIN) {
                                 inclusive = true
                             }
                         }
