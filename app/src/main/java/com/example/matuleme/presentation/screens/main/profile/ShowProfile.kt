@@ -1,17 +1,14 @@
 package com.example.matuleme.presentation.screens.main.profile
 
-import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -22,19 +19,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
@@ -49,6 +40,8 @@ import com.example.matuleme.presentation.components.dialogs.DialogError
 import com.example.matuleme.presentation.components.spacers.SpacerHeight
 import com.example.matuleme.presentation.components.spacers.SpacerWidth
 import com.example.matuleme.presentation.navigation.NavigationRoutes
+import com.example.matuleme.presentation.screens.main.profile.components.BarcodeGenerator
+import com.example.matuleme.presentation.screens.main.profile.components.BarcodeGeneratorFullScreen
 import com.example.matuleme.presentation.screens.main.profile.components.EditProfileField
 import com.example.matuleme.presentation.screens.main.profile.components.ProfileStates
 import com.example.matuleme.presentation.screens.main.profile.components.ShowProfileField
@@ -58,13 +51,6 @@ import com.example.matuleme.presentation.ui.theme.background
 import com.example.matuleme.presentation.ui.theme.block
 import com.example.matuleme.presentation.ui.theme.raleway
 import com.example.matuleme.presentation.ui.theme.text
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.EncodeHintType
-import com.google.zxing.WriterException
-import com.google.zxing.common.BitMatrix
-import com.google.zxing.oned.Code128Writer
-import com.google.zxing.qrcode.QRCodeWriter
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 
 @Composable
 fun ShowProfile(controller: NavHostController, vm: ShowProfileViewModel = hiltViewModel()) {
@@ -239,75 +225,5 @@ fun ShowProfile(controller: NavHostController, vm: ShowProfileViewModel = hiltVi
 
     }
 
-}
-
-fun generateBarcodeBitmap(text: String, width: Int, height: Int): Bitmap? {
-    val writer = Code128Writer() // Используем Code128Writer для CODE_128
-    return try {
-        val hints = mutableMapOf<EncodeHintType, Any>()
-        hints[EncodeHintType.MARGIN] = 1 // Устанавливаем отступы
-
-        val bitMatrix: BitMatrix = writer.encode(text, BarcodeFormat.CODE_128, width, height, hints)
-        val barcodeWidth = bitMatrix.width
-        val barcodeHeight = bitMatrix.height
-        val barcodeBitmap = Bitmap.createBitmap(barcodeWidth, barcodeHeight, Bitmap.Config.RGB_565)
-
-        for (x in 0 until barcodeWidth) {
-            for (y in 0 until barcodeHeight) {
-                barcodeBitmap.setPixel(x, y, if (bitMatrix[x, y]) android.graphics.Color.BLACK else android.graphics.Color.WHITE)
-            }
-        }
-
-        barcodeBitmap
-    } catch (e: WriterException) {
-        e.printStackTrace()
-        null
-    }
-}
-
-@Composable
-fun BarcodeGenerator(text: String) {
-    var barcodeBitmap by remember { mutableStateOf<Bitmap?>(null) }
-
-    val context = LocalContext.current
-    val displayMetrics = context.resources.displayMetrics
-    val screenWidth = displayMetrics.widthPixels
-    val barcodeHeight = 100.dp
-    LaunchedEffect(text) {
-        barcodeBitmap = generateBarcodeBitmap(text, screenWidth, barcodeHeight.value.toInt())
-    }
-
-    barcodeBitmap?.let { bitmap ->
-        Image(
-            bitmap = bitmap.asImageBitmap(),
-            contentDescription = "Barcode",
-            modifier = Modifier
-                .fillMaxWidth() // Занимает всю ширину экрана
-                .height(barcodeHeight) // Фиксированная высота
-        )
-    }
-}
-
-@Composable
-fun BarcodeGeneratorFullScreen(text: String) {
-    var barcodeBitmap by remember { mutableStateOf<Bitmap?>(null) }
-
-    val context = LocalContext.current
-    val displayMetrics = context.resources.displayMetrics
-    val screenWidth = (displayMetrics.widthPixels * 0.9).toInt()
-    val screenHeight = (displayMetrics.heightPixels * 0.6).toInt()
-
-    LaunchedEffect(text) {
-        barcodeBitmap = generateBarcodeBitmap(text, screenWidth, screenHeight)
-    }
-
-    barcodeBitmap?.let { bitmap ->
-        Image(
-            bitmap = bitmap.asImageBitmap(),
-            contentDescription = "Barcode",
-            modifier = Modifier
-                .fillMaxSize() // Занимает всю ширину и высоту экрана
-        )
-    }
 }
 

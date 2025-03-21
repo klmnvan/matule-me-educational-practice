@@ -30,7 +30,7 @@ import com.example.matuleme.presentation.ui.theme.text
 @SuppressLint("RestrictedApi", "StateFlowValueCalledInComposition")
 @Composable
 fun ButtonBack(controller: NavHostController) {
-    val lastScreenIsNotSplash = controller.currentBackStack.value.size != 2
+    val lastScreenIsNotSplash = controller.currentBackStack.value.size > 2
     Box(
         modifier = Modifier.alpha(if (lastScreenIsNotSplash) 1f else 0f)
             .clip(CircleShape)

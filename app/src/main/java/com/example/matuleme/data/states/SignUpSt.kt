@@ -1,7 +1,7 @@
 package com.example.matuleme.data.states
 
 data class SignUpSt(
-    val name: String = "kakashke",
+    val name: String = "",
     val email: String = "nesklmnvan@gmail.com",
     val password: String = "123456",
     val checkbox: Boolean = false,

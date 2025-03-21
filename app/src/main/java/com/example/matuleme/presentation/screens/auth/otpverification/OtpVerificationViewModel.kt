@@ -40,7 +40,11 @@ class OtpVerificationViewModel @Inject constructor() : ViewModel() {
                     email = email,
                     token = stateValue.code.joinToString("")
                 )
-                controller.navigate(NavigationRoutes.NEWPASSWORD + "/${email}")
+                controller.navigate(NavigationRoutes.NEWPASSWORD + "/${email}") {
+                    popUpTo(NavigationRoutes.OTP) {
+                        inclusive = false
+                    }
+                }
                 Log.d("проверка кода", "Всё хорошо")
             } catch (e: Exception) {
                 stateValue = stateValue.copy(
@@ -67,6 +71,7 @@ class OtpVerificationViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             try {
                 Constants.supabase.auth.resetPasswordForEmail(email = email)
+                stateValue = stateValue.copy(timer = 60)
                 startTimer()
                 Log.d("отправка кода ещё раз", "ок")
             } catch (e: Exception) {
